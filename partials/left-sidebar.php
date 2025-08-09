@@ -25,12 +25,12 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <li class="nxl-item nxl-hasmenu <?php echo ($current_page == 'index.php' || $current_page == 'analytics.php') ? 'active' : ''; ?>">
                     <a href="javascript:void(0);" class="nxl-link">
                         <span class="nxl-micon"><i class="feather-airplay"></i></span>
-                        <span class="nxl-mtext">Dashboards</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
+                        <span class="nxl-mtext">Dashboards</span></i></span>
                     </a>
-                    <ul class="nxl-submenu">
+                    <!-- <ul class="nxl-submenu">
                         <li class="nxl-item"><a class="nxl-link <?php echo ($current_page == 'index.php') ? 'active' : ''; ?>" href="index.php">CRM</a></li>
                         <li class="nxl-item"><a class="nxl-link <?php echo ($current_page == 'analytics.php') ? 'active' : ''; ?>" href="analytics.php">Analytics</a></li>
-                    </ul>
+                    </ul> -->
                 </li>
 
                 <!-- User Management Menu (Admin Only) -->
@@ -52,9 +52,9 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <span class="nxl-mtext">Approval Requests</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
                     </a>
                     <ul class="nxl-submenu">
-                        <li class="nxl-item"><a class="nxl-link <?php echo ($current_page == 'pending-approvals.php') ? 'active' : ''; ?>" href="New.php">Pending Approvals</a></li>
-                        <li class="nxl-item"><a class="nxl-link <?php echo ($current_page == 'approved-users.php') ? 'active' : ''; ?>" href="approved-users.php">Approved Users</a></li>
-                        <li class="nxl-item"><a class="nxl-link <?php echo ($current_page == 'denied-users.php') ? 'active' : ''; ?>" href="denied-users.php">Denied Users</a></li>
+                        <li class="nxl-item"><a class="nxl-link <?php echo ($current_page == 'pending-approvals.php') ? 'active' : ''; ?>" href="Approve.php">Pending Approvals</a></li>
+                        <li class="nxl-item"><a class="nxl-link <?php echo ($current_page == 'approved-users.php') ? 'active' : ''; ?>" href="Approv.php">Approved Users</a></li>
+                        <!-- <li class="nxl-item"><a class="nxl-link <?php echo ($current_page == 'denied-users.php') ? 'active' : ''; ?>" href="denied-users.php">Denied Users</a></li> -->
                     </ul>
                 </li>
 
@@ -65,9 +65,9 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <span class="nxl-mtext">Reports & Export Tools</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
                     </a>
                     <ul class="nxl-submenu">
-                        <li class="nxl-item"><a class="nxl-link <?php echo ($current_page == 'performance-reports.php') ? 'active' : ''; ?>" href="performance-reports.php">Performance Reports</a></li>
-                        <li class="nxl-item"><a class="nxl-link <?php echo ($current_page == 'lead-conversion-reports.php') ? 'active' : ''; ?>" href="lead-conversion-reports.php">Lead Conversion Reports</a></li>
-                        <li class="nxl-item"><a class="nxl-link <?php echo ($current_page == 'social-campaign-roi.php') ? 'active' : ''; ?>" href="social-campaign-roi.php">Social Campaign ROI</a></li>
+                        <li class="nxl-item"><a class="nxl-link <?php echo ($current_page == 'performance-reports.php') ? 'active' : ''; ?>" href="Performance_Reports.php">Performance Reports</a></li>
+                        <li class="nxl-item"><a class="nxl-link <?php echo ($current_page == 'lead-conversion-reports.php') ? 'active' : ''; ?>" href="Leadreport.php">Lead Conversion Reports</a></li>
+                        <li class="nxl-item"><a class="nxl-link <?php echo ($current_page == 'social-campaign-roi.php') ? 'active' : ''; ?>" href="Social_Campaign_ROI.php">Social Campaign ROI</a></li>
                         <li class="nxl-item"><a class="nxl-link <?php echo ($current_page == 'inventory-feedback.php') ? 'active' : ''; ?>" href="inventory-feedback.php">Inventory Feedback</a></li>
                     </ul>
                 </li>

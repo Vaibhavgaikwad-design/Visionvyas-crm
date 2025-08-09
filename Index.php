@@ -1,4 +1,18 @@
 <?php
+
+
+// If the user is already logged in, redirect them to their dashboard
+if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
+    if ($_SESSION['role'] == 'Admin') {
+        header("Location: admin_dashboard.php");
+        exit();
+    } elseif ($_SESSION['role'] == 'Manager') {
+        header("Location: manager_dashboard.php");
+        exit();
+    } // Add other roles as necessary
+}
+?>
+<?php
 // Include database connection
 include('db.php');
 session_start(); // Start the session to store user info
@@ -22,39 +36,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result) {
         // User found
-        // Verify the password
-        if (password_verify($password, $result['password'])) {
-            // Password is correct, start a session
-            $_SESSION['user_id'] = $result['id'];
-            $_SESSION['email'] = $result['email'];
-            $_SESSION['role'] = $result['role'];  // Save the role from the database
+   // After the password verification
+if ($result && password_verify($password, $result['password'])) {
+    // Session regeneration to prevent session fixation attacks
+    session_regenerate_id(true); 
 
-            // Check if the user is approved
-            if ($result['status'] == 'pending') {
-                echo "Your registration is pending approval. Please wait for the admin to approve your account.";
-                exit();  // Stop further execution if user is pending
-            }
+    // Store user info in session
+    $_SESSION['user_id'] = $result['id'];
+    $_SESSION['email'] = $result['email'];
+    $_SESSION['role'] = $result['role'];
 
-            // Role-based redirection based on role from the database
-            if ($_SESSION['role'] == 'Admin') {
-                header("Location: Ad.php"); // Redirect to Admin Dashboard
-            } elseif ($_SESSION['role'] == 'Manager') {
-                header("Location: manager_dashboard.php"); // Redirect to Manager Dashboard
-            } elseif ($_SESSION['role'] == 'User') {
-                header("Location: user_dashboard.php"); // Redirect to User Dashboard
-            } elseif ($_SESSION['role'] == 'Sales') {
-                header("Location: sales_dashboard.php"); // Redirect to Sales Dashboard
-            }
-            exit();
-        } else {
-            echo "Invalid email or password!"; // If password is incorrect
-        }
+    // Redirect based on user role
+    $roleRedirects = [
+        'Admin' => 'Ad.php',
+        'Manager' => 'manager_dashboard.php',
+        'User' => 'user_dashboard.php',
+        'Sales' => 'sales_dashboard.php',
+    ];
+
+    // Check if the user is approved
+    if ($result['status'] == 'pending') {
+        header("Location: pending_approval.php");
+    } else {
+        // Redirect to the corresponding dashboard based on role
+        header("Location: " . $roleRedirects[$_SESSION['role']] ?? 'default_dashboard.php');
+    }
+    exit();
+} else {
+    echo "Incorrect credentials, please try again.";
+}
+
     } else {
         echo "No user found with that email!"; // If email is not found
     }
 }
 ?>
-
 
 <!-- HTML code for the login form -->
 <!DOCTYPE html>
@@ -75,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="auth-cover-card-wrapper">
                 <div class="auth-cover-card p-sm-5">
                     <div class="wd-50 mb-5">
-                        <img src="assets/images/logo-abbr.png" alt="" class="img-fluid">
+                        <img src="assets/images/king.png" alt="" class="img-fluid">
                     </div>
                     <h2 class="fs-20 fw-bolder mb-4">Login</h2>
                     <h4 class="fs-13 fw-bold mb-2">Login to your account</h4>
@@ -97,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                             </div>
                             <div>
-                                <a href="auth-reset-cover.php" class="fs-11 text-primary">Forgot password?</a>
+                                <a href="auth-reset-minimal.php" class="fs-11 text-primary">Forgot password?</a>
                             </div>
                         </div>
                         <div class="mt-5">
@@ -114,6 +130,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </main>
     <?php include './partials/theme-customizer.php' ?>
     <?php include './partials/script.php' ?>
+    <script>
+    // Prevent the user from going back to the previous page after logout
+    window.history.pushState(null, null, window.location.href);
+    window.history.back();
+    window.history.forward();
+    window.onpopstate = function () {
+        window.history.forward();
+    };
+</script>
+
 </body>
 
 </html>

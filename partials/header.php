@@ -1970,7 +1970,7 @@
                                 <span>Account Settings</span>
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a href="./auth-login-minimal.php" class="dropdown-item">
+                            <a href="./logout.php" class="dropdown-item">
                                 <i class="feather-log-out"></i>
                                 <span>Logout</span>
                             </a>
